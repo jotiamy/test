@@ -1,0 +1,20 @@
+package total;
+
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+ 
+public class Photo extends JFrame{
+	public Photo() {
+//		this.setTitle("ͼƬ1");
+//		this.setBounds(100, 100, 1000, 1000);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setVisible(true);
+		ImageIcon image1 = new ImageIcon("file:///E:/apps/mooctest/software/src/photo/1.png");
+		JLabel label = new JLabel(image1);
+		this.add(label);
+	}
+
+}
+

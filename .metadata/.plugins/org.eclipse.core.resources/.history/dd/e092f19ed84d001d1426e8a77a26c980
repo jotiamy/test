@@ -1,0 +1,20 @@
+package total;
+import java.io.IOException;
+
+import method_1.*;
+import method_2.*;
+import method_3.*;
+import method_4.*;
+public class Main {
+    public static void main(String[] args) throws IOException {
+//        method_1.demo1 demo1=new method_1.demo1();
+//        demo1.main(args);
+//        method_2.Main demo2 =new method_2.Main();
+//        demo2.main(args);
+//        method_3.Main1 demo3 =new  method_3.Main1();
+//        demo3.main(args);
+        method_4.Main demo4 =new method_4.Main();
+        demo4.main(args);
+       }
+}
+

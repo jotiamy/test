@@ -1,0 +1,11 @@
+package total;
+import method_1.*;
+import method_2.*;
+import method_3.*;
+import method_4.*;
+public class Main {
+    public static void main(String[] args) {
+        method_1.demo1 demo1=new method_1.demo1();
+        demo1.main(args);
+    }
+}
