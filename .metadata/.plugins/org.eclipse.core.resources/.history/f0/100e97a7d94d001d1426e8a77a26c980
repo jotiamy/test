@@ -1,0 +1,20 @@
+package total;
+
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+ 
+public class Photo extends JFrame{
+	public Photo() {
+		this.setTitle("ͼƬ1");
+		this.setBounds(100, 100, 1000, 1000);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setVisible(true);
+		ImageIcon image1 = new ImageIcon("https://img-blog.csdnimg.cn/20201209233949962.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzg1MzA5Nw==,size_16,color_FFFFFF,t_70#pic_center");
+		JLabel label = new JLabel(image1);
+		this.add(label);
+	}
+
+}
+

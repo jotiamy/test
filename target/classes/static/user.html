@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link rel="stylesheet" href="plugins/element-ui/index.css" />
+  <link rel="stylesheet" href="styles/common.css" />
+  <link rel="stylesheet" href="styles/index.css" />
+  <link rel="stylesheet" href="styles/icon/iconfont.css" />
+</head>
+<body>
+
+
+
+<div id="app">
+    <!-- 新增标签弹层 -->
+    <el-button type="primary" class="butT" @click="handleCreate()">新建</el-button>
+    <div class="add-form">
+
+        <el-dialog title="新增联系人" :visible.sync="dialogFormVisible">
+
+            <el-form ref="dataAddForm" :model="formData" :rules="rules" label-position="right" label-width="100px">
+
+                <el-row>
+
+                    <el-col :span="12">
+
+                        <el-form-item label="id" prop="id">
+
+                            <el-input v-model="formData.id"/>
+
+                        </el-form-item>
+
+                    </el-col>
+
+                    <el-col :span="12">
+
+                        <el-form-item label="username" prop="name">
+
+                            <el-input v-model="formData.username"/>
+
+                        </el-form-item>
+
+                    </el-col>
+
+                </el-row>
+
+
+                <el-row>
+
+                    <el-col :span="12">
+
+                        <el-form-item label="phone">
+
+                            <el-input v-model="formData.phone" ></el-input>
+
+                        </el-form-item>
+
+                    </el-col>
+
+                </el-row>
+
+            </el-form>
+
+            <div slot="footer" class="dialog-footer">
+
+                <el-button @click="dialogFormVisible = false">取消</el-button>
+
+                <el-button type="primary"  @click="handleAdd()">确定</el-button>
+
+            </div>
+
+        </el-dialog>
+
+    </div>
+
+<!--编辑表单-->
+    <div class="edit-form">
+
+        <el-dialog title="编辑检查项" :visible.sync="dialogFormVisible4Edit">
+
+            <el-form ref="dataEditForm" :model="formData" :rules="rules" label-position="right" label-width="100px">
+
+                <el-row>
+
+                    <el-col :span="12">
+
+                        <el-form-item label="id" prop="id">
+
+                            <el-input v-model="formData.id"/>
+
+                        </el-form-item>
+
+                    </el-col>
+
+                    <el-col :span="12">
+
+                        <el-form-item label="username" prop="name">
+
+                            <el-input v-model="formData.username"/>
+
+                        </el-form-item>
+
+                    </el-col>
+
+                </el-row>
+
+                <el-row>
+
+                    <el-col :span="24">
+
+                        <el-form-item label="phone">
+
+                            <el-input v-model="formData.phone" ></el-input>
+
+                        </el-form-item>
+
+                    </el-col>
+
+                </el-row>
+
+            </el-form>
+
+            <div slot="footer" class="dialog-footer">
+
+                <el-button @click="dialogFormVisible4Edit = false">取消</el-button>
+
+                <el-button type="primary" @click="handleEdit()">确定</el-button>
+
+            </div>
+
+        </el-dialog>
+
+    </div>
+  <table class="providerTable" cellpadding="0" cellspacing="0">
+    <tr class="firstTr">
+      <th width="10%">id</th>
+      <th width="10%">username</th>
+      <th width="10%">phone</th>
+      <th width="10%">option</th>
+    </tr>
+    <tr v-for="(user ,i) in tableData" >
+      <td>{{user.id}}</td>
+      <td>{{user.username}}</td>
+      <td>{{user.phone}}</td>
+      <td>
+<!--        <a  @click="view(video.vid)" type="button"><img src="img/read.png" alt="查看" title="查看"/></a>-->
+        <a @click="handleUpdate(user.id)" type="button" >  <img src="img/xiugai.png" alt="修改" title="修改"/></a>
+        <a @click="handleDelete(user.id)"  type="button" class="delete"><img src="img/schu.png" alt="删除" title="删除"></a>
+      </td>
+    </tr>
+  </table>
+</div>
+<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+<script src="plugins/vue/vue.js"></script>
+<!-- 引入组件库 -->
+<script src="plugins/element-ui/index.js"></script>
+<!-- 引入axios -->
+<script src="plugins/axios/axios.min.js"></script>
+<script src="js/request.js"></script>
+<script src="./api/login.js"></script>
+<script>
+  new Vue({
+    el:'#app',
+    data() {
+      return {
+        tableData: [],
+          dialogFormVisible: false,//控制表单是否可见
+          formData:{}, //表单元素
+          dialogFormVisible4Edit:false
+      }
+    },
+    mounted(){
+        console.log("yes"),
+      this.getAll()
+    },
+    methods: {
+      getAll(){
+        axios.get("/user").then(resp=>{
+            this.tableData=resp.data.data;
+            console.log(this.tableData);
+        })
+      },
+      handleDelete(index, row) {
+        // console.log(index, row);
+          axios.delete("/user/"+index).then(resp=>{
+                this.getAll();
+          })
+      },
+        handleAdd(){
+          axios.post("/user",this.formData).then(resp=>{
+              this.getAll();
+              this.dialogFormVisible = false;
+
+
+          })
+        },
+        handleCreate() {
+            this.dialogFormVisible = true;
+            this.resetForm();
+        },
+        handleEdit(){
+          axios.put("/user",this.formData).then(resp=>{
+              this.dialogFormVisible4Edit=false;
+              this.getAll();
+          })
+        },
+        handleUpdate(index) {
+            axios.get("/user/"+index).then((resp)=>{
+                    this.formData = resp.data.data;
+                    this.dialogFormVisible4Edit = true;
+
+            })
+        }
+
+    }
+  })
+</script>
+</body>
+</html>
